@@ -336,6 +336,8 @@ main {
   border-radius: 20px;
 }
 
+.avatar-box img { border-radius: 12px; }
+
 .info-content .name {
   color: var(--white-2);
   font-size: var(--fs-3);
@@ -601,7 +603,7 @@ main {
   height: 80px;
 }
 
-.testimonials-item-title { margin-bottom: 7px; }
+.testimonials-item-title { margin-bottom: 7px; margin-left: 85px; }
 
 .testimonials-text {
   color: var(--light-gray);
