@@ -129,7 +129,20 @@ a { text-decoration: none; }
 
 li { list-style: none; }
 
-img, ion-icon, a, button, time, span { display: block; }
+img, ion-icon, button, time, span { display: block; }
+
+a:link {
+  color: var(--light-gray);
+  background-color: transparent;
+  text-decoration: underline;
+  margin-right: 5px;
+}
+a:visited {
+  color: var(--light-gray);
+  background-color: transparent;
+  text-decoration: underline;
+  margin-right: 5px;
+}
 
 button {
   font: inherit;
