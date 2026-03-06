@@ -619,6 +619,13 @@ main {
 
 .testimonials-avatar-box .lottie-avatar {
   display: block;
+  overflow: hidden;
+}
+
+.testimonials-avatar-box .lottie-avatar svg {
+  width: 80px;
+  height: 80px;
+  display: block;
 }
 
 .testimonials-item-title { margin-bottom: 7px; margin-left: 85px; }

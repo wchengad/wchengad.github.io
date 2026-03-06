@@ -38,10 +38,10 @@ for (let i = 0; i < testimonialsItem.length; i++) {
 
   testimonialsItem[i].addEventListener("click", function () {
 
-    const avatarImg = this.querySelector("[data-testimonials-avatar]");
-    if (avatarImg) {
-      modalImg.src = avatarImg.src;
-      modalImg.alt = avatarImg.alt;
+    const avatarNode = this.querySelector("[data-testimonials-avatar]");
+    if (avatarNode && avatarNode.tagName === 'IMG') {
+      modalImg.src = avatarNode.src;
+      modalImg.alt = avatarNode.alt;
     } else {
       // Keep the default modal image for cards that use non-img avatars (e.g. Lottie).
       modalImg.src = "./assets/images/mvpaint.png";
