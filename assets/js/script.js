@@ -38,8 +38,16 @@ for (let i = 0; i < testimonialsItem.length; i++) {
 
   testimonialsItem[i].addEventListener("click", function () {
 
-    modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
-    modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
+    const avatarImg = this.querySelector("[data-testimonials-avatar]");
+    if (avatarImg) {
+      modalImg.src = avatarImg.src;
+      modalImg.alt = avatarImg.alt;
+    } else {
+      // Keep the default modal image for cards that use non-img avatars (e.g. Lottie).
+      modalImg.src = "./assets/images/mvpaint.png";
+      modalImg.alt = "project";
+    }
+
     modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
     modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
 

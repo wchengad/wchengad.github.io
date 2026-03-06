@@ -354,6 +354,26 @@
               <div class="content-card" data-testimonials-item>
 
                 <figure class="testimonials-avatar-box">
+                  <div class="lottie-avatar" data-lottie-src="./assets/lottie/omnilottie-demo.json" aria-label="OmniLottie demo"></div>
+                </figure>
+
+                <h4 class="h4 testimonials-item-title" data-testimonials-title>OmniLottie</h4>
+
+                <div class="testimonials-text" data-testimonials-text>
+                  <p>
+                    <b>OmniLottie</b> generates high-quality vector animations from multi-modal instructions via parameterized Lottie tokens, and is trained on <b>MMLottie-2M</b>.
+                    <br>
+                    <a href="https://openvglab.github.io/OmniLottie/", align="right", style="color: hsl(45, 54%, 58%); line-height:3.5em; display: block;">>> Project Page</a>
+                  </p>
+                </div>
+
+              </div>
+            </li>
+
+            <li class="testimonials-item">
+              <div class="content-card" data-testimonials-item>
+
+                <figure class="testimonials-avatar-box">
                   <img src="./assets/images/mvpaint.png" alt="MVPaint" height="80px" data-testimonials-avatar>
                 </figure>
 
@@ -429,7 +449,7 @@
 
               </div>
             </li> -->
-
+<!-- 
             <li class="testimonials-item">
               <div class="content-card" data-testimonials-item>
 
@@ -449,7 +469,7 @@
                 </div>
 
               </div>
-            </li>
+            </li> -->
 
             <li class="testimonials-item">
               <div class="content-card" data-testimonials-item>
@@ -660,6 +680,10 @@
 
           <li class="timeline-item">
 
+
+
+          <li class="timeline-item">
+
             <p style="color: white">
               <a style="color: hsl(45, 54%, 58%)">OmniSVG: A Unified Scalable Vector Graphics Generation Model.</a> In <i>NeurIPS 2025</i>.<br>
               Yiying Yang<sup>*</sup>, <u>Wei Cheng</u><sup>*</sup>, Sijin Chen, Xianfang Zeng, and others.
@@ -672,6 +696,21 @@
             </p>
 
           </li>
+
+          <p style="color: white">
+            <a style="color: hsl(45, 54%, 58%)">OmniLottie: Generating Vector Animations via Parameterized Lottie Tokens.</a> In <i>CVPR 2026</i>.<br>
+            Yiying Yang, <u>Wei Cheng</u><sup>&dagger;</sup>, Sijin Chen, Honghao Fu, Xianfang Zeng, Yujun Cai, Gang Yu, Xingjun Ma.
+          </p>
+          <p>
+            <a href="https://arxiv.org/abs/2603.02138">arXiv</a>
+            <a href="https://openvglab.github.io/OmniLottie/">project page</a>
+            <a href="https://github.com/OpenVGLab/OmniLottie">code</a>
+            <a href="https://huggingface.co/OmniLottie/OmniLottie">model</a>
+            <a href="https://huggingface.co/datasets/OmniLottie/MMLottie-2M">data</a>
+            <a href="https://huggingface.co/datasets/OmniLottie/MMLottieBench">benchmark</a>
+          </p>
+
+        </li>
 
           <li class="timeline-item">
 
@@ -754,7 +793,7 @@
           <li class="timeline-item">
             <p style="color: white">
               <a style="color: hsl(45, 54%, 58%)">RegionE: Adaptive Region-Aware Generation for Efficient Image Editing.</a> In <i>ICLR 2026</i>.<br>
-              Pengtao Chen, Xianfang Zeng, Maosen Zhao, Mingzhu Shen, Peng Ye, Bangyin Xiang, Zhibo Wang, <u>Wei Cheng</u>, and others.
+              Pengtao Chen, Xianfang Zeng<sup>&dagger;</sup>, Maosen Zhao, Mingzhu Shen, Peng Ye, Bangyin Xiang, Zhibo Wang, <u>Wei Cheng</u>, and others.
             </p>
             <p>
               <a href="https://arxiv.org/abs/2510.25590">arXiv</a>  
@@ -781,7 +820,7 @@
 
             <p style="color: white">
               <a style="color: hsl(45, 54%, 58%)">Sparse-vDiT: Unleashing the Power of Sparse Attention to Accelerate Video Diffusion Transformers.</a> In <i>AAAI 2026</i>.<br>
-              Pengtao Chen, Xianfang Zeng, Maosen Zhao, Peng Ye, Mingzhu Shen, <u>Wei Cheng</u>, and others.
+              Pengtao Chen, Xianfang Zeng<sup>&dagger;</sup>, Maosen Zhao, Peng Ye, Mingzhu Shen, <u>Wei Cheng</u>, and others.
             </p>
             <p>
               <a href="https://arxiv.org/abs/2506.03065">arXiv</a>  
@@ -805,7 +844,7 @@
         <li class="timeline-item">
           <p style="color: white">
             <a style="color: hsl(45, 54%, 58%)">iMontage: Unified, Versatile, Highly Dynamic Many-to-many Image Generation.</a> In <i>CVPR 2026</i>.<br>
-            Zhoujie Fu, Xianfang Zeng, Jinghong Lan, Xinyao Liao, Cheng Chen, Junyi Chen, Jiacheng Wei, <u>Wei Cheng</u>, and others.
+            Zhoujie Fu, Xianfang Zeng<sup>&dagger;</sup>, Jinghong Lan, Xinyao Liao, Cheng Chen, Junyi Chen, Jiacheng Wei, <u>Wei Cheng</u>, and others.
           </p>
           <p>
             <a href="https://arxiv.org/abs/2511.20635">arXiv</a>  
@@ -1312,6 +1351,8 @@
     - custom js link
   -->
   <script src="./assets/js/script.js"></script>
+  <script src="https://unpkg.com/lottie-web@5.12.2/build/player/lottie.min.js"></script>
+  <script src="./assets/js/lottie-init.js"></script>
 
   <!--
     - ionicon link

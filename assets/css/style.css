@@ -610,10 +610,15 @@ main {
   box-shadow: var(--shadow-1);
 }
 
-.testimonials-avatar-box img { 
+.testimonials-avatar-box img,
+.testimonials-avatar-box .lottie-avatar {
   /* object-fit: cover; */
   width: 80px;
   height: 80px;
+}
+
+.testimonials-avatar-box .lottie-avatar {
+  display: block;
 }
 
 .testimonials-item-title { margin-bottom: 7px; margin-left: 85px; }
