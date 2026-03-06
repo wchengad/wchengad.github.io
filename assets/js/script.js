@@ -38,13 +38,13 @@ const stopModalLottie = function () {
   }
   modalLottie.innerHTML = "";
   modalLottie.hidden = true;
-  modalImg.hidden = false;
+  if (modalImg) modalImg.hidden = false;
 }
 
 const startModalLottie = function (path) {
   if (!modalLottie || !window.lottie || !path) return;
   stopModalLottie();
-  modalImg.hidden = true;
+  if (modalImg) modalImg.hidden = true;
   modalLottie.hidden = false;
   modalLottiePlayer = window.lottie.loadAnimation({
     container: modalLottie,
