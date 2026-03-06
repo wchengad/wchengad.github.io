@@ -738,6 +738,18 @@ main {
   box-shadow: var(--shadow-2);
 }
 
+.modal-lottie-avatar {
+  width: 80px;
+  height: 80px;
+  overflow: hidden;
+}
+
+.modal-lottie-avatar svg {
+  width: 80px;
+  height: 80px;
+  display: block;
+}
+
 .modal-img-wrapper > img { display: none; }
 
 .modal-title { margin-bottom: 4px; }

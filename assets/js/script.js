@@ -24,8 +24,37 @@ const overlay = document.querySelector("[data-overlay]");
 
 // modal variable
 const modalImg = document.querySelector("[data-modal-img]");
+const modalLottie = document.querySelector("[data-modal-lottie]");
 const modalTitle = document.querySelector("[data-modal-title]");
 const modalText = document.querySelector("[data-modal-text]");
+
+let modalLottiePlayer = null;
+
+const stopModalLottie = function () {
+  if (!modalLottie) return;
+  if (modalLottiePlayer) {
+    try { modalLottiePlayer.destroy(); } catch (_) { /* ignore */ }
+    modalLottiePlayer = null;
+  }
+  modalLottie.innerHTML = "";
+  modalLottie.hidden = true;
+  modalImg.hidden = false;
+}
+
+const startModalLottie = function (path) {
+  if (!modalLottie || !window.lottie || !path) return;
+  stopModalLottie();
+  modalImg.hidden = true;
+  modalLottie.hidden = false;
+  modalLottiePlayer = window.lottie.loadAnimation({
+    container: modalLottie,
+    renderer: 'svg',
+    loop: true,
+    autoplay: true,
+    path,
+    rendererSettings: { preserveAspectRatio: 'xMidYMid meet' },
+  });
+}
 
 // modal toggle function
 const testimonialsModalFunc = function () {
@@ -39,13 +68,20 @@ for (let i = 0; i < testimonialsItem.length; i++) {
   testimonialsItem[i].addEventListener("click", function () {
 
     const avatarNode = this.querySelector("[data-testimonials-avatar]");
-    if (avatarNode && avatarNode.tagName === 'IMG') {
-      modalImg.src = avatarNode.src;
-      modalImg.alt = avatarNode.alt;
+
+    // OmniLottie card: use Lottie in modal.
+    const lottieSrc = this.querySelector("[data-lottie-src]")?.getAttribute('data-lottie-src');
+    if (lottieSrc) {
+      startModalLottie(lottieSrc);
     } else {
-      // Keep the default modal image for cards that use non-img avatars (e.g. Lottie).
-      modalImg.src = "./assets/images/mvpaint.png";
-      modalImg.alt = "project";
+      stopModalLottie();
+      if (avatarNode && avatarNode.tagName === 'IMG') {
+        modalImg.src = avatarNode.src;
+        modalImg.alt = avatarNode.alt;
+      } else {
+        modalImg.src = "./assets/images/mvpaint.png";
+        modalImg.alt = "project";
+      }
     }
 
     modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
@@ -58,8 +94,14 @@ for (let i = 0; i < testimonialsItem.length; i++) {
 }
 
 // add click event to modal close button
-modalCloseBtn.addEventListener("click", testimonialsModalFunc);
-overlay.addEventListener("click", testimonialsModalFunc);
+modalCloseBtn.addEventListener("click", function () {
+  stopModalLottie();
+  testimonialsModalFunc();
+});
+overlay.addEventListener("click", function () {
+  stopModalLottie();
+  testimonialsModalFunc();
+});
 
 
 
