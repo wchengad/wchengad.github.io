@@ -750,6 +750,12 @@ main {
   display: block;
 }
 
+/* If Lottie is active, hide the fallback modal image reliably. */
+.modal-avatar-box .modal-lottie-avatar:not([hidden]) ~ img[data-modal-img],
+.modal-avatar-box .modal-lottie-avatar:not([hidden]) + img[data-modal-img] {
+  display: none !important;
+}
+
 .modal-img-wrapper > img { display: none; }
 
 .modal-title { margin-bottom: 4px; }
