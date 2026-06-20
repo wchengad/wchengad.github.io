@@ -14,7 +14,7 @@ const { pubsByYear, authorName } = Astro.props;
   {[...pubsByYear.entries()].map(([year, pubs]) => (
     <section data-year-section={year} class="animate-on-scroll">
       <h2 class="text-lg font-semibold mb-4 font-mono text-[var(--color-text-secondary)]">{year}</h2>
-      <div class="columns-1 md:columns-2 gap-4">
+      <div class="space-y-4">
         {pubs.map(pub => (
           <PublicationCard pub={pub} authorName={authorName} />
         ))}

@@ -59,19 +59,20 @@ const venueStyles: Record<string, { bg: string; text: string; dot: string }> = {
     )}
   </div>
 
-  <div class="columns-1 md:columns-2 gap-4">
+  <div class="space-y-4">
     {selectedPubs.map(pub => (
-      <div class="mb-4 break-inside-avoid p-4 rounded-xl bg-[var(--color-card-bg)] border border-[var(--color-border)] card-hover">
-        {pub.media && (
-          <div class="mb-3">
-            {/\.(mp4|webm|mov|m4v)$/i.test(pub.media) ? (
-              <video src={pub.media} class="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-border)]" autoplay loop muted playsinline preload="metadata"></video>
-            ) : (
-              <img src={pub.media} alt={pub.title} class="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)]" loading="lazy" />
-            )}
-          </div>
-        )}
-        <div class="min-w-0">
+      <div class="p-4 rounded-xl bg-[var(--color-card-bg)] border border-[var(--color-border)] card-hover">
+        <div class="flex flex-col sm:flex-row gap-4">
+          {pub.media && (
+            <div class="w-full sm:w-44 md:w-56 sm:shrink-0">
+              {/\.(mp4|webm|mov|m4v)$/i.test(pub.media) ? (
+                <video src={pub.media} class="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-border)]" autoplay loop muted playsinline preload="metadata"></video>
+              ) : (
+                <img src={pub.media} alt={pub.title} class="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)]" loading="lazy" />
+              )}
+            </div>
+          )}
+          <div class="flex-1 min-w-0">
             <h3 class="font-medium leading-snug">
               {pub.pdf ? (
                 <a href={pub.pdf} target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-accent)]">{pub.title}</a>
@@ -141,6 +142,7 @@ const venueStyles: Record<string, { bg: string; text: string; dot: string }> = {
               )}
             </div>
           </div>
+        </div>
       </div>
     ))}
   </div>

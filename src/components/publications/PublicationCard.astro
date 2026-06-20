@@ -33,36 +33,37 @@ function formatAuthors(authors: string[], name: string): string {
 ---
 
 <div
-  class="mb-4 break-inside-avoid p-4 sm:p-5 rounded-xl bg-[var(--color-card-bg)] border border-[var(--color-border)] card-hover"
+  class="p-4 sm:p-5 rounded-xl bg-[var(--color-card-bg)] border border-[var(--color-border)] border-l-2 border-l-[var(--color-accent)]/30 card-hover"
   data-pub-card
   data-venue-type={pub.venueType}
   data-title={pub.title}
   data-authors={pub.authors.join(', ')}
   data-venue={pub.venue}
 >
-  {media && (
-    <div class="mb-3">
-      {isVideo ? (
-        <video
-          src={media}
-          class="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-border)]"
-          autoplay
-          loop
-          muted
-          playsinline
-          preload="metadata"
-        ></video>
-      ) : (
-        <img
-          src={media}
-          alt={pub.title}
-          class="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)]"
-          loading="lazy"
-        />
-      )}
-    </div>
-  )}
-  <div class="min-w-0">
+  <div class="flex flex-col sm:flex-row gap-4">
+    {media && (
+      <div class="w-full sm:w-56 md:w-72 sm:shrink-0">
+        {isVideo ? (
+          <video
+            src={media}
+            class="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-border)]"
+            autoplay
+            loop
+            muted
+            playsinline
+            preload="metadata"
+          ></video>
+        ) : (
+          <img
+            src={media}
+            alt={pub.title}
+            class="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)]"
+            loading="lazy"
+          />
+        )}
+      </div>
+    )}
+    <div class="flex-1 min-w-0">
     <h3 class="font-medium leading-snug text-[var(--color-text)]">
       {pub.pdf || pub.url ? (
         <a href={pub.pdf || pub.url} target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-accent)] transition-colors">{pub.title}</a>
@@ -139,4 +140,5 @@ function formatAuthors(authors: string[], name: string): string {
         )}
       </div>
     </div>
+  </div>
 </div>
