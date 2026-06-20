@@ -1,0 +1,93 @@
+---
+import BaseLayout from '@components/layout/BaseLayout.astro';
+import PublicationList from '@components/publications/PublicationList.astro';
+import { parseBibTeX, getPublicationsByYear } from '@lib/bibtex';
+import { getConfig } from '@lib/config';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const config = getConfig();
+if (!config.pages.publications) return Astro.redirect('/404');
+
+let publications: any[] = [];
+let pubsByYear = new Map<number, any[]>();
+
+try {
+  const bibPath = path.resolve(process.cwd(), 'src/content/publications', config.publications.bibtex_file);
+  const bibContent = fs.readFileSync(bibPath, 'utf-8');
+  publications = parseBibTeX(bibContent);
+  pubsByYear = getPublicationsByYear(publications);
+} catch (e) {
+  console.error('Error reading BibTeX:', e);
+}
+
+const venueTypes = [...new Set(publications.map(p => p.venueType))];
+---
+
+<BaseLayout title="Publications" description="Research publications">
+  <Fragment slot="head">
+    <meta name="citation_title" content={config.site.title + " — Publications"} />
+    <meta name="citation_author" content={config.publications.author_name} />
+  </Fragment>
+  <div class="animate-on-scroll">
+    <div class="page-header">
+      <h1 class="text-3xl font-bold">Publications</h1>
+      <p class="text-xs text-[var(--color-text-secondary)] mt-2"><sup>*</sup> equal contribution &nbsp;·&nbsp; <sup>&dagger;</sup> project lead</p>
+    </div>
+
+    <!-- Venue-type filter -->
+    <div class="mb-8 flex flex-wrap gap-2" id="filter-chips">
+      <button data-filter="all" class="filter-chip active px-3 py-1.5 rounded-full text-xs font-medium bg-[var(--color-accent)] text-white transition-colors" aria-pressed="true">
+        All
+      </button>
+      {venueTypes.map(type => (
+        <button data-filter={type} class="filter-chip px-3 py-1.5 rounded-full text-xs font-medium bg-[var(--color-border)]/50 text-[var(--color-text-secondary)] hover:bg-[var(--color-accent)]/10 hover:text-[var(--color-accent)] transition-colors" aria-pressed="false">
+          {type}
+        </button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Publication list by year -->
+  <PublicationList pubsByYear={pubsByYear} authorName={config.publications.author_name} />
+
+  <script>
+    document.addEventListener('astro:page-load', () => {
+      const chips = document.querySelectorAll('.filter-chip');
+      const cards = document.querySelectorAll('[data-pub-card]');
+      const yearSections = document.querySelectorAll('[data-year-section]');
+
+      let activeFilter = 'all';
+
+      function filterPubs() {
+        cards.forEach(card => {
+          const el = card as HTMLElement;
+          const matchesFilter = activeFilter === 'all' || el.dataset.venueType === activeFilter;
+          el.style.display = matchesFilter ? '' : 'none';
+        });
+
+        // Hide empty year sections
+        yearSections.forEach(section => {
+          const el = section as HTMLElement;
+          const visibleCards = el.querySelectorAll('[data-pub-card]:not([style*="display: none"])');
+          el.style.display = visibleCards.length > 0 ? '' : 'none';
+        });
+      }
+
+      chips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          chips.forEach(c => {
+            c.classList.remove('active', 'bg-[var(--color-accent)]', 'text-white');
+            c.classList.add('bg-[var(--color-border)]/50', 'text-[var(--color-text-secondary)]');
+            c.setAttribute('aria-pressed', 'false');
+          });
+          chip.classList.add('active', 'bg-[var(--color-accent)]', 'text-white');
+          chip.classList.remove('bg-[var(--color-border)]/50', 'text-[var(--color-text-secondary)]');
+          chip.setAttribute('aria-pressed', 'true');
+          activeFilter = (chip as HTMLElement).dataset.filter || 'all';
+          filterPubs();
+        });
+      });
+    });
+  </script>
+</BaseLayout>

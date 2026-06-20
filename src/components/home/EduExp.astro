@@ -1,0 +1,51 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+import yaml from 'yaml';
+
+let cvData: any = { education: [], experience: [] };
+try {
+  const cvPath = path.resolve(process.cwd(), 'src/content/cv/cv.yml');
+  cvData = yaml.parse(fs.readFileSync(cvPath, 'utf-8'));
+} catch {}
+
+// Compact homepage version: degree + institution only, no thesis/description.
+const education = (cvData.education || []).map((e: any) => ({
+  degree: e.degree,
+  institution: e.institution,
+}));
+
+// Compact homepage version: organization names only, no dates/descriptions.
+// Shanghai AI Lab is shown only on the full /cv page, not here.
+const experience = (cvData.experience || [])
+  .filter((e: any) => !/shanghai ai/i.test(e.organization || ''))
+  .map((e: any) => ({ organization: e.organization }));
+---
+
+{(education.length > 0 || experience.length > 0) && (
+  <section class="animate-on-scroll mt-10 grid grid-cols-1 sm:grid-cols-2 gap-4">
+    {education.length > 0 && (
+      <div class="p-5 rounded-xl bg-[var(--color-card-bg)] border border-[var(--color-border)]">
+        <h2 class="text-base font-semibold mb-3">Education</h2>
+        <ul class="space-y-2">
+          {education.map((e: any) => (
+            <li class="text-sm leading-snug">
+              <span class="font-medium">{e.degree}</span>
+              <span class="text-[var(--color-text-secondary)]">, {e.institution}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )}
+    {experience.length > 0 && (
+      <div class="p-5 rounded-xl bg-[var(--color-card-bg)] border border-[var(--color-border)]">
+        <h2 class="text-base font-semibold mb-3">Experience</h2>
+        <ul class="space-y-2">
+          {experience.map((e: any) => (
+            <li class="text-sm leading-snug font-medium">{e.organization}</li>
+          ))}
+        </ul>
+      </div>
+    )}
+  </section>
+)}

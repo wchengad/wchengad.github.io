@@ -1,0 +1,56 @@
+---
+import { getConfig } from '@lib/config';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const config = getConfig();
+
+// Read news files manually
+const newsDir = path.resolve(process.cwd(), 'src/content/news');
+let newsItems: { title: string; date: Date; content: string; pinned: boolean }[] = [];
+
+try {
+  const files = fs.readdirSync(newsDir).filter(f => f.endsWith('.md'));
+  for (const file of files) {
+    const raw = fs.readFileSync(path.join(newsDir, file), 'utf-8');
+    const frontmatterMatch = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+    if (frontmatterMatch) {
+      const fm = frontmatterMatch[1];
+      const content = frontmatterMatch[2].trim();
+      const title = fm.match(/title:\s*"(.+?)"/)?.[1] || '';
+      const dateStr = fm.match(/date:\s*(.+)/)?.[1]?.trim() || '';
+      const pinned = fm.includes('pinned: true');
+      newsItems.push({ title, date: new Date(dateStr), content, pinned });
+    }
+  }
+} catch {}
+
+// Sort: pinned first, then by date descending
+newsItems.sort((a, b) => {
+  if (a.pinned !== b.pinned) return a.pinned ? -1 : 1;
+  return b.date.getTime() - a.date.getTime();
+});
+
+// Year-month only (UTC to avoid timezone drift)
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const fmtYM = (d: Date) => `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
+---
+
+<section class="animate-on-scroll">
+  <div class="p-5 rounded-xl bg-[var(--color-card-bg)] border border-[var(--color-border)]">
+    <h2 class="text-base font-semibold mb-3">News</h2>
+
+    <ul class="space-y-1.5">
+      {newsItems.map(item => (
+        <li class="flex gap-3 items-baseline text-sm leading-snug">
+          <span class="font-mono text-xs text-[var(--color-text-secondary)] shrink-0 w-[4.5rem]">
+            {fmtYM(item.date)}
+          </span>
+          <span class={item.pinned ? 'text-[var(--color-accent)] font-medium' : 'text-[var(--color-text)]'}>
+            {item.title}
+          </span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>

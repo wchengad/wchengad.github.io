@@ -1,0 +1,74 @@
+---
+import BaseLayout from '@components/layout/BaseLayout.astro';
+import { getConfig } from '@lib/config';
+import fs from 'node:fs';
+import path from 'node:path';
+
+const config = getConfig();
+if (!config.pages.news) return Astro.redirect('/404');
+
+const newsDir = path.resolve(process.cwd(), 'src/content/news');
+let newsItems: { title: string; date: Date; content: string; pinned: boolean }[] = [];
+
+try {
+  const files = fs.readdirSync(newsDir).filter(f => f.endsWith('.md'));
+  for (const file of files) {
+    const raw = fs.readFileSync(path.join(newsDir, file), 'utf-8');
+    const fmMatch = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
+    if (!fmMatch) continue;
+    const fm = fmMatch[1];
+    const content = fmMatch[2].trim();
+    const title = fm.match(/title:\s*"(.+?)"/)?.[1] || '';
+    const dateStr = fm.match(/date:\s*(.+)/)?.[1]?.trim() || '';
+    const pinned = fm.includes('pinned: true');
+    newsItems.push({ title, date: new Date(dateStr), content, pinned });
+  }
+} catch {}
+
+// Sort by date descending, then group by year (luost-style)
+newsItems.sort((a, b) => b.date.getTime() - a.date.getTime());
+
+const byYear = new Map<number, typeof newsItems>();
+for (const item of newsItems) {
+  const y = item.date.getFullYear();
+  if (!byYear.has(y)) byYear.set(y, []);
+  byYear.get(y)!.push(item);
+}
+const years = [...byYear.keys()].sort((a, b) => b - a);
+
+// Month abbreviation (year is shown as the group heading)
+const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+const fmtMonth = (d: Date) => MONTHS[d.getUTCMonth()];
+---
+
+<BaseLayout title="News" description="Latest news and announcements">
+  <div class="animate-on-scroll">
+    <div class="page-header">
+      <h1 class="text-3xl font-bold">News</h1>
+    </div>
+  </div>
+
+  <div class="space-y-10">
+    {years.map(year => (
+      <section class="animate-on-scroll">
+        <h2 class="text-2xl font-bold text-[var(--color-accent)] mb-4">{year}</h2>
+        <div class="space-y-4">
+          {byYear.get(year)!.map(item => (
+            <div class="flex gap-4 sm:gap-6 items-start p-4 rounded-xl hover:bg-[var(--color-card-bg)] transition-colors">
+              <div class="text-sm font-mono text-[var(--color-text-secondary)] shrink-0 min-w-[3rem] pt-0.5">
+                {fmtMonth(item.date)}
+              </div>
+              <div>
+                <h3 class="font-medium text-lg">
+                  {item.pinned && <span class="text-[var(--color-accent)] mr-1.5">&#9679;</span>}
+                  {item.title}
+                </h3>
+                {item.content && <p class="mt-1 text-[var(--color-text-secondary)]">{item.content}</p>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    ))}
+  </div>
+</BaseLayout>

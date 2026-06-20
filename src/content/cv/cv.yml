@@ -1,0 +1,45 @@
+# Education & Experience power both the /cv page and the homepage sections.
+# Dates are left blank where unknown — fill in "year" / "start_date" / "end_date" as you like.
+# "description" supports basic HTML (e.g. <a href="...">links</a>).
+
+education:
+  - degree: "M.Phil."
+    institution: "Hong Kong University of Science and Technology (HKUST)"
+    year: ""
+    description: 'Thesis: Human Reconstruction and Motion Capture using a Single Flying Camera. <a href="/files/master_thesis.pdf">[pdf]</a> <a href="https://lbezone.hkust.edu.hk/bib/991012637368303412">[e-print]</a>'
+  - degree: "B.Eng."
+    institution: "Huazhong University of Science and Technology (HUST)"
+    year: ""
+    description: ""
+
+experience:
+  - title: "Researcher"
+    organization: "StepFun"
+    start_date: ""
+    end_date: "Present"
+    description: "Working with Dr. Gang Yu on AIGC, personalized content creation, 3D generation, and computer graphics."
+  - title: "Researcher"
+    organization: "Tencent"
+    start_date: ""
+    end_date: ""
+    description: "3D generation and human-centric neural rendering."
+  - title: "Researcher"
+    organization: "SenseTime Research"
+    start_date: ""
+    end_date: ""
+    description: "Human-centric reconstruction, neural rendering, and large-scale datasets."
+  - title: "Researcher"
+    organization: "Shanghai AI Laboratory"
+    start_date: ""
+    end_date: ""
+    description: "Generalizable neural rendering and human performance capture."
+
+skills:
+  - category: "Research"
+    items: ["AIGC", "Image/Video Generation & Editing", "3D Generation", "Neural Rendering", "Computer Graphics"]
+  - category: "Programming"
+    items: ["Python", "PyTorch", "C++", "CUDA"]
+
+awards: []
+
+service: []
