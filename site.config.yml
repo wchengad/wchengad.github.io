@@ -49,7 +49,7 @@ pages:
 
 theme:
   cursor_spotlight: false
-  style: "modern"
+  style: "classic"
   palette: "default"
   random_theme: false
   avatars:
