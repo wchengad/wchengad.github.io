@@ -53,21 +53,21 @@ function renderSimpleMarkdown(md: string): string {
 ---
 
 <section class="animate-on-scroll">
-  <div class="flex flex-col md:flex-row gap-8 md:gap-12 items-start">
+  <div class="flex flex-col md:flex-row gap-6 md:gap-12 items-center md:items-start">
     <!-- Profile photo + social links -->
-    <div class="shrink-0 flex flex-col items-center gap-3 w-40 md:w-48">
+    <div class="shrink-0 flex flex-col items-center gap-3">
       <div class="avatar-frame">
         <img
           src={avatarSrc}
           alt={config.profile.name}
-          class="w-40 h-40 md:w-48 md:h-48 rounded-lg object-cover shadow-lg"
+          class="w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 rounded-lg object-cover shadow-lg"
           data-avatar-img
           onerror="this.style.display='none'"
         />
       </div>
 
       <!-- Social links (under avatar, icon-only) -->
-      <div class="flex flex-wrap justify-center gap-1.5">
+      <div class="flex flex-wrap justify-center gap-1.5 max-w-[12rem]">
         {activeSocials.map(([key, url]) => (
           <a
             href={key === 'email' ? `mailto:${url}` : url}
@@ -86,13 +86,13 @@ function renderSimpleMarkdown(md: string): string {
     </div>
 
     <!-- Profile info -->
-    <div class="flex-1">
-      <h1 class="text-3xl md:text-4xl font-bold tracking-tight gradient-text">{config.profile.name}</h1>
-      <p class="mt-2 text-lg text-[var(--color-text-secondary)]">
+    <div class="flex-1 min-w-0">
+      <h1 class="text-3xl md:text-4xl font-bold tracking-tight gradient-text text-center md:text-left">{config.profile.name}</h1>
+      <p class="mt-2 text-lg text-[var(--color-text-secondary)] text-center md:text-left">
         {config.profile.position}, {config.profile.affiliation}
       </p>
       {config.profile.university && (
-        <p class="text-[var(--color-text-secondary)]">{config.profile.university}</p>
+        <p class="text-[var(--color-text-secondary)] text-center md:text-left">{config.profile.university}</p>
       )}
 
       <!-- Bio -->

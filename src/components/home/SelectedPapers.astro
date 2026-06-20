@@ -59,20 +59,19 @@ const venueStyles: Record<string, { bg: string; text: string; dot: string }> = {
     )}
   </div>
 
-  <div class="space-y-4">
+  <div class="columns-1 md:columns-2 gap-4">
     {selectedPubs.map(pub => (
-      <div class="p-4 rounded-xl bg-[var(--color-card-bg)] border border-[var(--color-border)] card-hover">
-        <div class="flex items-start gap-4">
-          {pub.media && (
-            <div class="shrink-0 w-28 sm:w-40">
-              {/\.(mp4|webm|mov|m4v)$/i.test(pub.media) ? (
-                <video src={pub.media} class="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-border)]" autoplay loop muted playsinline preload="metadata"></video>
-              ) : (
-                <img src={pub.media} alt={pub.title} class="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)]" loading="lazy" />
-              )}
-            </div>
-          )}
-          <div class="flex-1 min-w-0">
+      <div class="mb-4 break-inside-avoid p-4 rounded-xl bg-[var(--color-card-bg)] border border-[var(--color-border)] card-hover">
+        {pub.media && (
+          <div class="mb-3">
+            {/\.(mp4|webm|mov|m4v)$/i.test(pub.media) ? (
+              <video src={pub.media} class="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-border)]" autoplay loop muted playsinline preload="metadata"></video>
+            ) : (
+              <img src={pub.media} alt={pub.title} class="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)]" loading="lazy" />
+            )}
+          </div>
+        )}
+        <div class="min-w-0">
             <h3 class="font-medium leading-snug">
               {pub.pdf ? (
                 <a href={pub.pdf} target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-accent)]">{pub.title}</a>
@@ -116,19 +115,32 @@ const venueStyles: Record<string, { bg: string; text: string; dot: string }> = {
                   Video
                 </a>
               )}
+              {pub.model && (
+                <a href={pub.model} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-[var(--color-border)]/50 hover:bg-[var(--color-accent)]/10 hover:text-[var(--color-accent)] transition-colors">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"/></svg>
+                  Model
+                </a>
+              )}
+              {pub.data && (
+                <a href={pub.data} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-[var(--color-border)]/50 hover:bg-[var(--color-accent)]/10 hover:text-[var(--color-accent)] transition-colors">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7c0 1.657 3.582 3 8 3s8-1.343 8-3-3.582-3-8-3-8 1.343-8 3z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 7v5c0 1.657 3.582 3 8 3s8-1.343 8-3V7M4 12v5c0 1.657 3.582 3 8 3s8-1.343 8-3v-5"/></svg>
+                  Data
+                </a>
+              )}
+              {pub.benchmark && (
+                <a href={pub.benchmark} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-[var(--color-border)]/50 hover:bg-[var(--color-accent)]/10 hover:text-[var(--color-accent)] transition-colors">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                  Benchmark
+                </a>
+              )}
+              {pub.demo && (
+                <a href={pub.demo} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 px-2.5 py-1 rounded-lg text-xs font-medium bg-[var(--color-border)]/50 hover:bg-[var(--color-accent)]/10 hover:text-[var(--color-accent)] transition-colors">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                  Demo
+                </a>
+              )}
             </div>
           </div>
-          {pub.preview && (
-            <a href={`/images/publications/${pub.preview}`} target="_blank" rel="noopener noreferrer" class="hidden sm:block shrink-0" data-lightbox>
-              <img
-                src={`/images/publications/${pub.preview}`}
-                alt=""
-                class="w-20 h-20 md:w-24 md:h-24 rounded-lg object-contain shrink-0 border border-[var(--color-border)] bg-[var(--color-bg)] p-1"
-                loading="lazy"
-              />
-            </a>
-          )}
-        </div>
       </div>
     ))}
   </div>

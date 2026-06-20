@@ -33,44 +33,41 @@ function formatAuthors(authors: string[], name: string): string {
 ---
 
 <div
-  class="p-4 sm:p-5 rounded-xl bg-[var(--color-card-bg)] border border-[var(--color-border)] border-l-2 border-l-[var(--color-accent)]/30 card-hover"
+  class="mb-4 break-inside-avoid p-4 sm:p-5 rounded-xl bg-[var(--color-card-bg)] border border-[var(--color-border)] card-hover"
   data-pub-card
   data-venue-type={pub.venueType}
   data-title={pub.title}
   data-authors={pub.authors.join(', ')}
   data-venue={pub.venue}
 >
-  <div class="flex items-start gap-4">
-    {media && (
-      <div class="shrink-0 w-28 sm:w-44 md:w-52">
-        {isVideo ? (
-          <video
-            src={media}
-            class="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-border)]"
-            autoplay
-            loop
-            muted
-            playsinline
-            preload="metadata"
-          ></video>
-        ) : (
-          <img
-            src={media}
-            alt={pub.title}
-            class="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)]"
-            loading="lazy"
-          />
-        )}
-      </div>
-    )}
-    <div class="flex-1 min-w-0">
-      <h3 class="font-medium leading-snug text-[var(--color-text)]">
-        {pub.pdf || pub.url ? (
-          <a href={pub.pdf || pub.url} target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-accent)] transition-colors">
-            {pub.title}
-          </a>
-        ) : pub.title}
-      </h3>
+  {media && (
+    <div class="mb-3">
+      {isVideo ? (
+        <video
+          src={media}
+          class="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-border)]"
+          autoplay
+          loop
+          muted
+          playsinline
+          preload="metadata"
+        ></video>
+      ) : (
+        <img
+          src={media}
+          alt={pub.title}
+          class="w-full rounded-lg border border-[var(--color-border)] bg-[var(--color-bg)]"
+          loading="lazy"
+        />
+      )}
+    </div>
+  )}
+  <div class="min-w-0">
+    <h3 class="font-medium leading-snug text-[var(--color-text)]">
+      {pub.pdf || pub.url ? (
+        <a href={pub.pdf || pub.url} target="_blank" rel="noopener noreferrer" class="hover:text-[var(--color-accent)] transition-colors">{pub.title}</a>
+      ) : pub.title}
+    </h3>
 
       <p class="mt-1.5 text-sm text-[var(--color-text-secondary)]" set:html={formatAuthors(pub.authors, authorName)} />
 
@@ -142,15 +139,4 @@ function formatAuthors(authors: string[], name: string): string {
         )}
       </div>
     </div>
-    {pub.preview && (
-      <a href={`/images/publications/${pub.preview}`} target="_blank" rel="noopener noreferrer" class="hidden sm:block shrink-0" data-lightbox>
-        <img
-          src={`/images/publications/${pub.preview}`}
-          alt=""
-          class="w-24 h-24 md:w-28 md:h-28 rounded-lg object-contain shrink-0 border border-[var(--color-border)] bg-[var(--color-bg)] p-1"
-          loading="lazy"
-        />
-      </a>
-    )}
-  </div>
 </div>
