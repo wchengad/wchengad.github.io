@@ -14,6 +14,8 @@ export default defineConfig({
       filter: (page) =>
         page === 'https://wchengad.github.io/' ||
         page === 'https://wchengad.github.io/publications/',
+      // Stamp lastmod on every build so search engines re-crawl sooner
+      lastmod: new Date(),
     }),
   ],
   output: 'static',
