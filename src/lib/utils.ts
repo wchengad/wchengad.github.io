@@ -15,6 +15,36 @@ export function slugify(text: string): string {
   return text.toLowerCase().replace(/[^\w\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').trim();
 }
 
+function escapeHtml(text: string): string {
+  return text.replace(/[&<>"']/g, char => {
+    switch (char) {
+      case '&': return '&amp;';
+      case '<': return '&lt;';
+      case '>': return '&gt;';
+      case '"': return '&quot;';
+      case "'": return '&#39;';
+      default: return char;
+    }
+  });
+}
+
+export function renderInlineMarkdownLinks(text: string): string {
+  const linkPattern = /\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g;
+  let html = '';
+  let lastIndex = 0;
+  let match: RegExpExecArray | null;
+
+  while ((match = linkPattern.exec(text)) !== null) {
+    const [fullMatch, label, href] = match;
+    html += escapeHtml(text.slice(lastIndex, match.index));
+    html += `<a href="${escapeHtml(href)}" target="_blank" rel="noopener noreferrer" class="font-semibold underline decoration-2 underline-offset-2">${escapeHtml(label)}</a>`;
+    lastIndex = match.index + fullMatch.length;
+  }
+
+  html += escapeHtml(text.slice(lastIndex));
+  return html;
+}
+
 export function groupBy<T>(items: T[], key: (item: T) => string): Record<string, T[]> {
   return items.reduce((groups, item) => {
     const group = key(item);

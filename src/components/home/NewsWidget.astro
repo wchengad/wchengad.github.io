@@ -1,5 +1,6 @@
 ---
 import { getConfig } from '@lib/config';
+import { renderInlineMarkdownLinks } from '@lib/utils';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -47,7 +48,7 @@ const fmtYM = (d: Date) => `${MONTHS[d.getUTCMonth()]} ${d.getUTCFullYear()}`;
             {fmtYM(item.date)}
           </span>
           <span class={item.pinned ? 'text-[var(--color-accent)] font-medium' : 'text-[var(--color-text)]'}>
-            {item.title}
+            <Fragment set:html={renderInlineMarkdownLinks(item.title)} />
           </span>
         </li>
       ))}

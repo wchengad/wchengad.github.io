@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '@components/layout/BaseLayout.astro';
 import { getConfig } from '@lib/config';
+import { renderInlineMarkdownLinks } from '@lib/utils';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -61,7 +62,7 @@ const fmtMonth = (d: Date) => MONTHS[d.getUTCMonth()];
               <div>
                 <h3 class="font-medium text-lg">
                   {item.pinned && <span class="text-[var(--color-accent)] mr-1.5">&#9679;</span>}
-                  {item.title}
+                  <Fragment set:html={renderInlineMarkdownLinks(item.title)} />
                 </h3>
                 {item.content && <p class="mt-1 text-[var(--color-text-secondary)]">{item.content}</p>}
               </div>
