@@ -3,7 +3,7 @@
 
 site:
   title: "Wei Cheng"
-  description: "Senior Researcher at StepFun working on edge-side multimodal foundation models and AIGC image foundation models."
+  description: "Senior Researcher at StepFun working on edge AI, on-device multimodal foundation models, and generative image foundation models."
   url: "https://wchengad.github.io"
   language: "en"
 
@@ -14,8 +14,8 @@ profile:
   university: ""
   email: "wchengad@connect.ust.hk"
   avatar: "/images/avatar.jpeg"
-  bio: "I am a Senior Researcher at StepFun working on edge-side multimodal foundation models, with interests in AIGC image foundation models, image editing, and controllable generation."
-  bio_short: "Senior Researcher at StepFun working on edge-side multimodal foundation models and AIGC image models."
+  bio: "I am a Senior Researcher at StepFun working on edge AI and on-device multimodal foundation models, with interests in generative image foundation models, image editing, and controllable generation."
+  bio_short: "Senior Researcher at StepFun working on edge AI, on-device multimodal foundation models, and generative image models."
 
 social:
   google_scholar: "https://scholar.google.com.hk/citations?hl=en&user=OC8eBkYAAAAJ&view_op=list_works&sortby=pubdate"

@@ -1,5 +1,5 @@
 ---
-title: "We have released [StepEdge](https://static.stepfun.com/blog/step-edge/)! We are recruiting research interns on edge-side foundation models — feel free to contact me if interested!"
-date: 2026-07-13
+title: "We are always looking for research interns interested in edge AI and on-device foundation models — feel free to contact me!"
+date: 2026-07-14
 pinned: true
 ---
