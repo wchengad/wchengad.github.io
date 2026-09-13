@@ -131,6 +131,41 @@ const pageDescription = description || config.site.description;
     </script>
   )}
   <script is:inline>
+    // Astro View Transitions replace page content without a full document
+    // reload. Browsers do not consistently start autoplay videos that are
+    // inserted during that swap, so initialize them explicitly on every
+    // navigation as well as on the initial page load.
+    function initVideos() {
+      document.querySelectorAll('video[autoplay]').forEach(function(video) {
+        var v = video;
+        v.muted = true;
+        v.defaultMuted = true;
+
+        function playWhenReady() {
+          var result = v.play();
+          if (result && typeof result.catch === 'function') {
+            result.catch(function() {
+              // Autoplay can still be denied by browser policy. The video is
+              // left ready for the user's normal playback controls in that case.
+            });
+          }
+        }
+
+        if (v.readyState === 0) {
+          v.load();
+        }
+        if (v.readyState >= 2) {
+          playWhenReady();
+        } else {
+          v.addEventListener('loadeddata', playWhenReady, { once: true });
+        }
+      });
+    }
+    document.addEventListener('DOMContentLoaded', initVideos);
+    document.addEventListener('astro:page-load', initVideos);
+    document.addEventListener('astro:after-swap', initVideos);
+  </script>
+  <script is:inline>
     function initLazyImages() {
       document.querySelectorAll('img[loading="lazy"]').forEach(function(img) {
         if (img.complete) img.classList.add('loaded');
